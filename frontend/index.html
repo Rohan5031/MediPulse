@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediPulse Clinical AI Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Professional Medical Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-icon">✚</span>
+                <div>
+                    <h1>MediPulse AI</h1>
+                    <p>Rule-Based Clinical Diagnosis System</p>
+                </div>
+            </div>
+            <div class="status-pill">
+                <span class="pulse-dot"></span> System Operational
+            </div>
+        </div>
+    </header>
+
+    <main class="app-layout">
+        
+        <!-- Left Section: Clean Symptom Selector -->
+        <section class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <h2>1. Select Patient Symptoms</h2>
+                    <p class="panel-sub">Tick all symptoms reported during consultation</p>
+                </div>
+                <span id="selected-count" class="count-badge">0 Selected</span>
+            </div>
+
+            <!-- Clean Category Filter -->
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterCategory('All')">All Symptoms</button>
+                <button class="filter-btn" onclick="filterCategory('General')">General</button>
+                <button class="filter-btn" onclick="filterCategory('Respiratory')">Respiratory</button>
+                <button class="filter-btn" onclick="filterCategory('Neurological')">Neurological</button>
+                <button class="filter-btn" onclick="filterCategory('Cardiovascular')">Cardio</button>
+            </div>
+
+            <div id="symptoms-grid" class="symptoms-list"></div>
+
+            <div class="action-footer">
+                <button id="btn-forward" class="btn btn-primary" onclick="runForwardChaining()" disabled>
+                    Run Forward Chaining ➔
+                </button>
+                <button class="btn btn-secondary" onclick="resetForm()">Reset All</button>
+            </div>
+        </section>
+
+        <!-- Right Section: Clean Professional Output -->
+        <section class="panel-card">
+            <div class="panel-header">
+                <div>
+                    <h2>2. Diagnostic Assessment</h2>
+                    <p class="panel-sub">Real-time reasoning & decision evaluation</p>
+                </div>
+                <button id="btn-pdf" class="btn btn-small" style="display:none;" onclick="window.print()">
+                    🖨️ Print Clinical Report
+                </button>
+            </div>
+
+            <!-- Simple Reasoning Step Tracker -->
+            <div class="stepper-bar">
+                <div class="step-item step-active" id="step-1">1. Input Symptoms</div>
+                <div class="step-divider"></div>
+                <div class="step-item" id="step-2">2. Forward Match</div>
+                <div class="step-divider"></div>
+                <div class="step-item" id="step-3">3. Backward Verification</div>
+            </div>
+
+            <!-- Clean Output Area -->
+            <div id="results-area">
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <h3>No Active Evaluation</h3>
+                    <p>Select symptoms from the left panel and click "Run Forward Chaining" to generate diagnosis.</p>
+                </div>
+            </div>
+
+            <!-- Clean Chart -->
+            <div id="chart-card" class="chart-wrapper" style="display:none;">
+                <h3>Rule Matching Confidence</h3>
+                <canvas id="confidenceChart" height="110"></canvas>
+            </div>
+
+            <div class="disclaimer-box">
+                <strong>Safety Note:</strong> This system uses rule-based AI for academic demonstration and clinical decision support. Always verify with a certified physician.
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Backward Chaining Modal -->
+    <div id="bc-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-badge">Backward Chaining Verification</span>
+                <h3 id="modal-condition-title">Condition Verification</h3>
+            </div>
+            <p class="modal-text">Target hypothesis require checking additional symptoms to confirm diagnosis:</p>
+            
+            <div id="modal-symptoms-list" class="modal-options"></div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="submitBackwardVerification()">Verify & Calculate Score</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Skip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergency-modal" class="modal-overlay">
+        <div class="modal-box emergency-box">
+            <h3 style="color:#dc2626;">🚨 Critical Emergency Alert</h3>
+            <p style="margin-top:0.5rem; color:#4b5563;">Selected symptoms indicate potential high-risk cardiac or respiratory crisis. Emergency medical intervention is strongly recommended.</p>
+            <button class="btn btn-danger" onclick="closeEmergencyModal()">Acknowledge Alert</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
