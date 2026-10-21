@@ -1,4 +1,5 @@
 const API_URL = "http://127.0.0.1:8000/api";
+const API_URL = "https://medipulse-w5f3.onrender.com/api";
 let allSymptoms = [];
 let activeSymptoms = new Set();
 let currentCandidateRule = null;
