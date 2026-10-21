@@ -4,8 +4,9 @@ from pydantic import BaseModel
 from app.knowledge_base import SYMPTOMS_DB
 from app.engine import ChainingEngine
 
-app = FastAPI(title="Rule-Based Diagnosis System")
+app = FastAPI(title="MediPulse Clinical AI")
 
+# Allow Vercel & All Origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,6 +21,11 @@ class ForwardRequest(BaseModel):
 class BackwardRequest(BaseModel):
     rule_id: str
     all_symptoms: list[str]
+
+# Added Root Endpoint to prevent 404
+@app.get("/")
+def root():
+    return {"message": "MediPulse AI Backend API is Running Successfully!"}
 
 @app.get("/api/symptoms")
 def get_symptoms():
