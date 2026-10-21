@@ -6,10 +6,11 @@ from app.engine import ChainingEngine
 
 app = FastAPI(title="MediPulse Clinical AI")
 
+# Clear & Permissive CORS Configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -23,7 +24,7 @@ class BackwardRequest(BaseModel):
 
 @app.get("/")
 def root():
-    return {"status": "ok", "message": "MediPulse AI API Service Running"}
+    return {"status": "ok", "message": "MediPulse AI Backend API is Live"}
 
 @app.get("/api/symptoms")
 def get_symptoms():
